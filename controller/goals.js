@@ -1,12 +1,14 @@
 const Goal = require("../model/goalsModel");
+
 exports.getGoals = async (req, res) => {
   console.log("you reached backend");
   res
     .status(200)
     .json({ status: "success", data: { goal: "testing", id: "_id " } });
 };
+
 exports.newGoal = async (req, res) => {
-  console.log(req.body.value, "data in back");
+  console.log(req.body, "data in back");
 
   const goal = new Goal({ goalTitle: req.body.value });
 
@@ -23,6 +25,7 @@ exports.newGoal = async (req, res) => {
     }
   });
 };
+
 exports.editGoal = (req, res) => {
   console.log(req.body.data);
   res

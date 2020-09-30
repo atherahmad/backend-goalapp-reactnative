@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 
 connectDB();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use("/api/goals", require("./router/goals"));
 
 app.listen(process.env.PORT, () =>
