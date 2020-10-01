@@ -2,9 +2,13 @@ const Goal = require("../model/goalsModel");
 
 exports.getGoals = async (req, res) => {
   console.log("you reached backend");
-  res
-    .status(200)
-    .json({ status: "success", data: { goal: "testing", id: "_id " } });
+  Goal.find(async (err, doc) => {
+    if (err) res.status(500).json({ status: "error", message: err });
+    else {
+      console.log("her is the doc to return ", doc);
+      res.status(200).json({ status: "success", data: doc });
+    }
+  });
 };
 
 exports.newGoal = async (req, res) => {
@@ -13,7 +17,10 @@ exports.newGoal = async (req, res) => {
   const goal = new Goal({ goalTitle: req.body.value });
 
   await goal.save(async (err, doc) => {
-    if (err) res.status(500).json({ status: "error", message: err });
+    if (err)
+      res
+        .status(500)
+        .json({ status: "failed", message: "Unable to save your goal" });
     else {
       Goal.find(async (err, doc) => {
         if (err) res.status(500).json({ status: "error", message: err });
