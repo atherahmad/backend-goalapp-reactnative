@@ -3,6 +3,6 @@ const goals = require("../controller/goals");
 
 router.get("/getgoals", goals.getGoals);
 router.post("/newgoal", goals.newGoal);
-router.put("/editgoal", goals.editGoal);
+router.post("/deletegoal", goals.deleteGoal);
 
 module.exports = router;

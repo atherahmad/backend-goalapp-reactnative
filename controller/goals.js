@@ -33,9 +33,12 @@ exports.newGoal = async (req, res) => {
   });
 };
 
-exports.editGoal = (req, res) => {
-  console.log(req.body.data);
-  res
-    .status(200)
-    .json({ status: "success", message: "Goal editted Successfully" });
+exports.deleteGoal = (req, res) => {
+  console.log(req.body.id);
+  Goal.findByIdAndDelete(req.body.id, (err, doc) => {
+    if (err) res.status(500).json({ status: "error", message: err });
+    else {
+      res.status(200).json({ status: "success", data: doc });
+    }
+  });
 };
