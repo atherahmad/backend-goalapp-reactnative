@@ -12,20 +12,24 @@ exports.getGoals = async (req, res) => {
 };
 
 exports.newGoal = async (req, res) => {
-  console.log(req.body, "data in back");
+  console.log(req.body.data, "data in back");
 
-  const goal = new Goal({ goalTitle: req.body.value });
+  const goal = new Goal({
+    goalTitle: req.body.data.goalTitle,
+    goalDetails: req.body.data.goalDetails,
+    goalDate: req.body.data.goalDate,
+  });
 
   await goal.save(async (err, doc) => {
-    if (err)
+    if (err) {
       res
         .status(500)
         .json({ status: "failed", message: "Unable to save your goal" });
-    else {
+    } else {
       Goal.find(async (err, doc) => {
-        if (err) res.status(500).json({ status: "error", message: err });
-        else {
-          console.log(doc);
+        if (err) {
+          res.status(500).json({ status: "error", message: err });
+        } else {
           res.status(200).json({ status: "success", data: doc });
         }
       });
