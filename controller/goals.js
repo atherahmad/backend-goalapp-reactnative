@@ -46,3 +46,24 @@ exports.deleteGoal = (req, res) => {
     }
   });
 };
+
+exports.goalDetails = (req, res) => {
+  const id = req.params.id;
+  Goal.findById(id, (err, doc) => {
+    if (err) res.status(500).json({ status: "error", message: err });
+    else res.status(200).json({ status: "success", data: doc });
+  });
+};
+
+exports.editGoal = (req, res) => {
+  console.log("you reached edit", req.body.data);
+  const { _id, goalTitle, goalDetails, goalDate } = req.body.data;
+  Goal.findByIdAndUpdate(
+    _id,
+    { goalTitle, goalDate, goalDetails },
+    (err, doc) => {
+      if (err) res.status(500).json({ status: "error", message: err });
+      else res.status(200).json({ status: "success", data: doc });
+    }
+  );
+};
